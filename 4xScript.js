@@ -22,9 +22,8 @@ function balCheck(){
 		console.log("Based on your parameters you need a minimum of " + betTotal + " to use this strategy, and you only have " + bal);
 		engine.stop();
 	}
-	else{
+	else
 		percent = betTotal/bal;
-	}
 }
 balCheck();
 
@@ -38,11 +37,11 @@ engine.on('game_crash', function(data) {
 		playing = true;
 		return;
 	}
-    if((data.game_crash/100)<currentCashout && currentBet==betTotal){
+        if((data.game_crash/100)<currentCashout && currentBet==betTotal){
 		console.log("Max Loses reached")
 		if(stopScriptOnLoss)
 			engine.stop();
-		else{
+		else{//currently thiss is dead code
 			currentBet = baseBet;
 			currentCashout = baseCashout;
 			cumulativeLoss = 0;
