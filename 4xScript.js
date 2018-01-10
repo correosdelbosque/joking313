@@ -1,6 +1,7 @@
 //You can change these variables:
 var baseBet = 1;//bet to return to on win
 var maxLoses = 4;//the number of losses you can take in a row
+//this means you will need baseBet*4^(maxLoses-1) bits
 
 //You can change these variables but it is recommended to leave them as is:
 var baseCashout = 1.04;//this is the cashout that will be returned to on a win, the cashout will be variable after a loss
@@ -11,11 +12,12 @@ var percent;//based on your baseBet and you maxLoses this will calculate what pe
 //this will be used to find out by how much to proportionally increase your bet while remaining under the original percent
 var currentCashout = baseCashout;//used in determining what the current cashout is
 var betTotal = baseBet*Math.pow(4,maxLoses-1);
-var stopScriptOnLoss = true;
-var cumulativeLoss = 0;
+var stopScriptOnLoss = true;//will terminate script on a loss,do not change this for now will update soon
+var cumulativeLoss = 0;//on loss this is used to determine how much to bet at the given cashout to break back to even
 var playing = false;//will delay initial start by one game so that if script is ran between 'game_started' and 'game_crash' phase 
 //it will not prematurly increase bet if busts below "currentCashout"
 
+//function used to determine if user has enough funds for the strategy they selected
 function balCheck(){
 	let bal = (engine.getBalance()/100);
 	if(bal<betTotal){
@@ -41,7 +43,7 @@ engine.on('game_crash', function(data) {
 		console.log("Max Loses reached")
 		if(stopScriptOnLoss)
 			engine.stop();
-		else{//currently thiss is dead code
+		else{//currently this is dead code
 			currentBet = baseBet;
 			currentCashout = baseCashout;
 			cumulativeLoss = 0;
