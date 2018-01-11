@@ -75,10 +75,14 @@ engine.on('game_crash', function(data) {
 		currentBet = baseBet;
 		currentCashout = baseCashout;
 		cumulativeLoss = 0;
+		if(((baseBet+1)*Math.pow(4,maxLoses-1))>100000)
+			return;
+		else{
 		let incTest = baseBet+1;
 		let incTotal = calcTotalLoss(incTest);
 		let bal = (engine.getBalance()/100);
 		if((incTotal/bal)<percent)
 			baseBet=incTest;
-	}	
+		}
+	}		
 });
