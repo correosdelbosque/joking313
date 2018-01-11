@@ -76,7 +76,7 @@ engine.on('game_crash', function(data) {
 		currentCashout = baseCashout;
 		cumulativeLoss = 0;
 		let incTest = baseBet+1;
-		let incTotal = incTest*calcTotalLoss(incTest);
+		let incTotal = calcTotalLoss(incTest);
 		let bal = (engine.getBalance()/100);
 		if((incTotal/bal)<percent)
 			baseBet=incTest;
