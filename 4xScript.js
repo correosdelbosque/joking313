@@ -18,15 +18,18 @@ var playing = false;//will delay initial start by one game so that if script is 
 var totalLoss = baseBet;//This is the total amount you would lose after "maxLoses" loses in a row
 
 //used to calculate totalLoss
-function calcTotalLoss(){
-	let temp = baseBet;
+function calcTotalLoss(baseB){
+	let temp = baseB;
+	var allLoss = baseB;
 	for(let i=0;i<maxLoses-1;i++){
 		temp = temp*4;
-		totalLoss += temp;
+		allLoss += temp;
 	}
+	return allLoss;
 }
-calcTotalLoss();
+totalLoss = calcTotalLoss(baseBet);
 
+//used to calculate totalLoss
 function balCheck(){
 	let bal = (engine.getBalance()/100);
 	if(bal<totalLoss){
@@ -43,6 +46,7 @@ function balCheck(){
 }
 balCheck();
 
+
 engine.on('game_starting', function(info) {
     engine.placeBet(currentBet*100, currentCashout*100);
 });
@@ -52,7 +56,7 @@ engine.on('game_crash', function(data) {
 		playing = true;
 		return;
 	}
-        if((data.game_crash/100)<currentCashout && currentBet==betTotal){
+    if((data.game_crash/100)<currentCashout && currentBet==maxBet){
 		console.log("Max Loses reached")
 		if(stopScriptOnLoss)
 			engine.stop();
@@ -72,7 +76,7 @@ engine.on('game_crash', function(data) {
 		currentCashout = baseCashout;
 		cumulativeLoss = 0;
 		let incTest = baseBet+1;
-		let incTotal = incTest*Math.pow(4,maxLoses-1);
+		let incTotal = incTest*calcTotalLoss(incTest);
 		let bal = (engine.getBalance()/100);
 		if((incTotal/bal)<percent)
 			baseBet=incTest;
