@@ -1,6 +1,6 @@
 //You can change these variables:
 var baseBet = 1;//bet to return to on win
-var maxLoses = 4;//the number of losses you can take in a row
+var maxLoses = 4;//the number of losses you can take in a row, after "maxLoses" loses the program will terminate
 
 //You can change these variables but it is recommended to leave them as is:
 var baseCashout = 1.04;//this is the cashout that will be returned to on a win, the cashout will be variable after a loss
