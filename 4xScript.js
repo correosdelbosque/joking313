@@ -1,6 +1,7 @@
 //You can change these variables:
 var baseBet = 1;//bet to return to on win
 var maxLoses = 4;//the number of losses you can take in a row, after "maxLoses" loses the program will terminate
+var risingBet = true;//when set to true the baseBet will increase with winning games, if set to false baseBet will always stay the same
 
 //You can change these variables but it is recommended to leave them as is:
 var baseCashout = 1.04;//this is the cashout that will be returned to on a win, the cashout will be variable after a loss
@@ -75,7 +76,7 @@ engine.on('game_crash', function(data) {
 		currentBet = baseBet;
 		currentCashout = baseCashout;
 		cumulativeLoss = 0;
-		if(((baseBet+1)*Math.pow(4,maxLoses-1))>100000)
+		if(((baseBet+1)*Math.pow(4,maxLoses-1))>100000 || !risingBet)
 			return;
 		else{
 		let incTest = baseBet+1;
