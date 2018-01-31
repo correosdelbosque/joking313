@@ -4,7 +4,7 @@
 var wageredBits = 5000;//the total amount of bits to allow this script to bet with
 var maxLosses = 6;//the number of losses you can take in a row, after "maxLosses" losses the program will terminate
 var risingBetPercentage = .50;//percent of winnings to reinvest into betting for example if your risingBetPercentage is at .50 and 
-//basebet comes out to 100 bits on 1.08 a win would give you 8 bits on win therefore 4 would be reinvested into raising your bets the other 4 would be safe and not used to bet
+//basebet comes out to 100 bits on 1.08 a win would give you 8 bits, therefore 4 would be reinvested into raising your bets the other 4 would be safe and not used to bet
 //if you dont want to reinvest any set it to 0 if you want to reinvest all set it to 1
 
 //You can change these variables but it is recommended to leave them as is:
