@@ -37,7 +37,7 @@ function idiotTest(){
 		engine.stop();
 	}
 }
-//idiotTest();
+idiotTest();
 
 //calculates the base bet as determined by your maxLosses and wageredBits
 function calcBase(bits,num){
