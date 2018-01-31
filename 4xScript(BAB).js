@@ -64,7 +64,7 @@ engine.on('GAME_ENDED', function() {
 		log("Game start!");
 		return;
 	}
-    if(engine.history.first().bust<currentCashout && lossStreak==maxLosses){
+    	if(engine.history.first().bust<currentCashout && lossStreak==maxLosses){
 		stop("Max Losses reached");
 	}
 	else if(engine.history.first().bust<currentCashout){
