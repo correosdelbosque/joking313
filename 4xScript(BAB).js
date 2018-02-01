@@ -85,7 +85,7 @@ engine.on('GAME_ENDED', function() {
 			currentBet = calcBase(wageredBits,maxLosses);
 		}
 	}
-	if(lossStreak==maxLosses){
+	if(lossStreak-1==maxLosses){
 		stop("Max Losses reached");
 	}
 });
