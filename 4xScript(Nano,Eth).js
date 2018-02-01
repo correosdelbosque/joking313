@@ -24,7 +24,7 @@ var userBalance = engine.getBalance()/100;//the users balance
 
 //used to determine if all user set variables were set to values that make sense
 function idiotTest(){
-	if(engine.getBalance()<wageredBits){
+	if(userBalance<wageredBits){
 		console.log("wageredBits is higher than your balance");
 		engine.stop();
 	}
