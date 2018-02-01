@@ -64,10 +64,7 @@ engine.on('GAME_ENDED', function() {
 		log("Game start!");
 		return;
 	}
-    	if(engine.history.first().bust<currentCashout && lossStreak==maxLosses){
-		stop("Max Losses reached");
-	}
-	else if(engine.history.first().bust<currentCashout){
+	if(engine.history.first().bust<currentCashout){
 		cumulativeLoss+=currentBet;
 		currentBet*=4;
 		currentCashout = parseFloat(((cumulativeLoss/currentBet)+1).toFixed(2));
@@ -87,5 +84,8 @@ engine.on('GAME_ENDED', function() {
 			log("wagered bits is now " + wageredBits);
 			currentBet = calcBase(wageredBits,maxLosses);
 		}
-	}		
+	}
+	if(lossStreak==maxLosses){
+		stop("Max Losses reached");
+	}
 });
