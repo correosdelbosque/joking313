@@ -48,6 +48,10 @@ function calcBase(wagered,limit){
 	for(let i=0;i<limit-1;i++){
 		base = (base*multiplier)/(multiplier+1);
 	}
+	if(Math.floor(base)<1){
+		console.log("Need a min of " + 1*Math.pow(5,limit-1) + " bits and you only have " + userBalance);
+		engine.stop();
+	}
 	return Math.floor(base);
 }
 currentBet = calcBase(wageredBits,maxLosses);
