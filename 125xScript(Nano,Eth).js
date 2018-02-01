@@ -88,7 +88,7 @@ engine.on('game_crash', function(data) {
 		}
 		console.log("WON: "+ "new bet is " + currentBet + " new cashout is " + currentCashout);
 	}
-	if((lossStreak==maxLosses){
+	if(lossStreak-1==maxLosses){
 		console.log("Max Losses reached")
 		engine.stop();
 	}
