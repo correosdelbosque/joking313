@@ -70,11 +70,7 @@ engine.on('game_crash', function(data) {
 		console.log("Game start!");
 		return;
 	}
-    if((data.game_crash/100)<currentCashout && lossStreak==maxLosses){
-		console.log("Max Losses reached")
-		engine.stop();
-	}
-	else if((data.game_crash/100)<currentCashout){
+	if((data.game_crash/100)<currentCashout){
 		currentCashout = 1.25;
 		currentBet = Math.floor(currentBet + currentBet/(currentCashout-1));		
 		lossStreak++;
@@ -91,5 +87,9 @@ engine.on('game_crash', function(data) {
 			currentBet = calcBase(Math.floor(wageredBits),maxLosses);
 		}
 		console.log("WON: "+ "new bet is " + currentBet + " new cashout is " + currentCashout);
-	}		
+	}
+	if((lossStreak==maxLosses){
+		console.log("Max Losses reached")
+		engine.stop();
+	}
 });
