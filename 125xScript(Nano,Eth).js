@@ -72,7 +72,7 @@ engine.on('game_crash', function(data) {
 	}
 	if((data.game_crash/100)<currentCashout){
 		currentCashout = 1.25;
-		currentBet *= 5; 
+		currentBet = Math.floor(currentBet + currentBet/(currentCashout-1));
 		lossStreak++;
 		console.log("LOST: new bet is " + currentBet + " new cashout is " + currentCashout);
 	}
