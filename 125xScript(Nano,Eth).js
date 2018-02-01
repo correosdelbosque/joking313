@@ -1,5 +1,6 @@
 //For RaiGames, and Ethcrash
 //1.25x Script
+//DO NOT USE, FATAL BUG FOUND WILL FIX SOON, DO NOT USE THIS SCRIPT
 
 //You can change these variables:
 var wageredBits = 5000;//the total amount of bits to allow this script to bet with
