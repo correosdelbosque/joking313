@@ -92,7 +92,7 @@ engine.on('game_crash', function(data) {
 			currentBet = calcBase(Math.floor(wageredBits),maxLosses);
 		}
 	}
-	if(lossStreak-1==maxLosses){
+	if(lossStreak+1==maxLosses){
 		console.log("Max Losses reached")
 		engine.stop();
 	}
