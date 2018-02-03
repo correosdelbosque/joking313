@@ -38,7 +38,7 @@ function calcBase(bits,num){
 	var sigma = [1,5,21,85,341,1365,5461,21845,87381];
 	var bases = [1,4,16,64,256,1024,4096,16384,65536];
 	if(bits/sigma[num-1]<1)
-		stop("You need at least " + sigma[num-1] + " bits for this strategy, you only have " + userInfo.balance + " bits.");
+		stop("You need at least " + sigma[num-1] + " bits to run with your parameters, and you only set wageredBits to " + wageredBits);
 	else if(bits/sigma[num-1]*bases[num-1]>maxBet){
 		var maxBet = maxBet;
 		for(let i=0;i<num-1;i++)
