@@ -1,6 +1,5 @@
 //For RaiGames, and Ethcrash
 //1.25x Script
-//DO NOT USE, FATAL BUG FOUND WILL FIX SOON, DO NOT USE THIS SCRIPT
 
 //You can change these variables:
 var wageredBits = 5000;//the total amount of bits to allow this script to bet with
@@ -73,7 +72,10 @@ engine.on('game_crash', function(data) {
 	}
 	if((data.game_crash/100)<currentCashout){
 		currentCashout = 1.25;
-		currentBet = Math.floor(currentBet + currentBet/(currentCashout-1));
+		if(lossStreak==0)
+			currentBet *= 4;
+		else
+			currentBet *= 5;
 		lossStreak++;
 		console.log("LOST: new bet is " + currentBet + " new cashout is " + currentCashout);
 	}
