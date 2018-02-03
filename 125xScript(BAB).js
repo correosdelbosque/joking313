@@ -43,7 +43,7 @@ function calcBase(wagered,limit){
 		base = (base*multiplier)/(multiplier+1);
 	}
 	if(Math.floor(base)<1)
-		stop("Need a min of " + 1*Math.pow(5,limit-1) + " bits and you only have " + userBalance);
+		stop("Need a min of " + 1*Math.pow(5,limit-1) + " bits to run with your parameters, and you only set wageredBits to " + wageredBits);
 	return Math.floor(base);
 }
 currentBet = calcBase(wageredBits,maxLosses);
