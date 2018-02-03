@@ -10,7 +10,7 @@ var risingBetPercentage = .50;//percent of winnings to reinvest into betting for
 
 //You can change these variables but it is recommended to leave them as is:
 var baseCashout = 1.06;//this is the cashout that will be returned to on a win, the cashout will be variable after a loss (suggested range is 1.04x - 1.08x)
-var maxBet = 100000;//RaiGames allows bets no larger than 100000 as of 1/10/18 and they have not updated API this value should be 1,000,000 on bustabit and ethcrash
+var maxBet = 1000000;//RaiGames allows bets no larger than 100000 as of 1/10/18 and they have not updated API this value should be 1,000,000 on bustabit and ethcrash
 
 //Do not change these variables:
 var initialWagered = wageredBits;// has to be kept track of so that when increasing wageredBits it will increase it correctly
