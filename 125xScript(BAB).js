@@ -1,4 +1,4 @@
-//For RaiGames, and Ethcrash
+//For BustABit
 //1.25x Script
 
 //You can change these variables:
