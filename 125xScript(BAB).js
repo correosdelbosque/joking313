@@ -52,7 +52,7 @@ currentBet = calcBase(wageredBits,maxLosses);
 engine.on('GAME_STARTING', function() {
 	if(playing){
 		log("Current balance: " + userInfo.balance + " will bet " + currentBet + " at " + currentCashout);
-		engine.placeBet(currentBet*100, currentCashout*100);
+		engine.bet(currentBet*100, currentCashout);
 	}
 });
 
