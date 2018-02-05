@@ -83,7 +83,7 @@ engine.on('GAME_ENDED', function() {
 		}
 		log("WON: "+ "new bet is " + currentBet + " new cashout is " + currentCashout);
 	}
-	if(lossStreak+1==maxLosses){
+	if(lossStreak==maxLosses){
 		stop("Max Losses reached");
 	}
 });
