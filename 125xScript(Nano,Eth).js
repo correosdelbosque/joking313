@@ -25,15 +25,15 @@ var userBalance = engine.getBalance()/100;//the users balance
 //used to determine if all user set variables were set to values that make sense
 function idiotTest(){
 	if(userBalance<wageredBits){
-		console.log("wageredBits is higher than your balance");
+		throwError("wageredBits is higher than your balance");
 		engine.stop();
 	}
 	if(maxLosses<3 || maxLosses>9){
-		console.log("use a number between 3 and 9 for max losses inclusive");
+		throwError("use a number between 3 and 9 for max losses inclusive");
 		engine.stop();
 	}
 	if(risingBetPercentage>1 || risingBetPercentage<0){
-		console.log("risingBetPercentage must be between 0 and 1 inclusive");
+		throwError("risingBetPercentage must be between 0 and 1 inclusive");
 		engine.stop();
 	}
 }
@@ -49,7 +49,7 @@ function calcBase(wagered,limit){
 		base = (base*multiplier)/(multiplier+1);
 	}
 	if(Math.floor(base)<1){
-		console.log("Need a min of " + 1*Math.pow(5,limit-1) + " bits to run with your parameters, and you only set wageredBits to " + wageredBits);
+		throwError("Need a min of " + 1*Math.pow(5,limit-1) + " bits to run with your parameters, and you only set wageredBits to " + wageredBits);
 		engine.stop();
 	}
 	return Math.floor(base);
@@ -92,7 +92,53 @@ engine.on('game_crash', function(data) {
 		console.log("WON: "+ "new bet is " + currentBet + " new cashout is " + currentCashout);
 	}
 	if(lossStreak==maxLosses){
-		console.log("Max Losses reached")
+		throwError("Max Losses reached")
 		engine.stop();
 	}
 });
+
+//Displays error screen when something bad happens, created my own div popup, instead of using javascript:alert, because
+//it lays the groundwork for the next feature of the script, and it looks nicer too
+//Still looks kind of ugly right now despite that, however I wanted to get a functioning error box so people who dont know how to
+//use the console can still assess what is wrong with the script
+function throwError(message){
+	var error = document.createElement("div");
+	error.style.maxWidth = "400px";
+	error.style.maxHeight = "100px";
+	error.style.top = 0;
+	error.style.left = 0;
+	error.style.bottom = 0;
+	error.style.right = 0;
+	error.style.position = "absolute";
+	error.style.margin = "auto";
+	error.style.zIndex = 1000;
+	error.style.background = "grey";
+	error.style.color = "white";
+	error.style.borderRadius = "10px";
+	
+	var header = document.createElement("div");
+	header.style.borderRadius = "10px 10px 0px 0px";
+	header.style.background = "red";
+	header.style.textAlign = "center";
+	header.innerHTML = "Error!";
+	var close = document.createElement("p");
+	close.innerHTML = "&#9746;";
+	close.style.display = "inline";
+	close.style.position = "absolute";
+	close.style.right = "10px";
+	close.style.cursor = "pointer";
+	header.appendChild(close);
+	close.addEventListener("click", function(){
+		document.body.removeChild(error);
+	});
+	error.appendChild(header);
+	
+	var para = document.createElement("p");
+	para.style.padding = "5px"
+	para.innerHTML = message;
+	para.style.textAlign = "center";
+	para.style.top = "500px";
+	error.appendChild(para);
+	
+	document.body.appendChild(error);
+}
