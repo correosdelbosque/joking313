@@ -21,6 +21,8 @@ var playing = false;//will delay initial start by one game so that if script is 
 //it will not prematurly increase bet if busts below "currentCashout"
 var lossStreak = 0;//number of losses in a row
 var userBalance = userInfo.balance/100;//the users balance
+var totalWon = 0;//total profit from the script thus far
+var prevLoss = false;//used to determine if the last game was won or lost to figure out if wageredBits should increase
 
 //used to determine if all user set variables were set to values that make sense
 function idiotTest(){
@@ -47,7 +49,6 @@ function calcBase(wagered,limit){
 	return Math.floor(base);
 }
 currentBet = calcBase(wageredBits,maxLosses);
-//log("Bet " + currentBet);
 
 engine.on('GAME_STARTING', function() {
 	if(playing){
@@ -70,17 +71,19 @@ engine.on('GAME_ENDED', function() {
 			currentBet *= 5;	
 		lossStreak++;
 		log("LOST: new bet is " + currentBet + " new cashout is " + currentCashout);
+		prevLoss = true;
 	}
 	else{
 		currentBet = calcBase(Math.floor(wageredBits),maxLosses);
 		currentCashout = baseCashout;
 		lossStreak = 0;
-		if(risingBetPercentage!=0){
+		if(risingBetPercentage!=0 && !prevLoss){
 			wageredBits = initialWagered;
-			var newBal = parseFloat((userInfo.balance/100-userBalance).toFixed(2));
-			wageredBits += newBal*risingBetPercentage
+			totalWon += parseFloat((currentBet*currentCashout-currentBet).toFixed(2));
+			wageredBits += totalWon*risingBetPercentage;
 			currentBet = calcBase(Math.floor(wageredBits),maxLosses);
 		}
+		prevLoss = false;
 		log("WON: "+ "new bet is " + currentBet + " new cashout is " + currentCashout);
 	}
 	if(lossStreak==maxLosses){
