@@ -39,8 +39,8 @@ idiotTest();
 function calcBase(wagered,limit){
 	var base = wagered;
 	var multiplier = 0.25;
-	if(base>maxBet)
-		base = maxBet;
+	if(base>maxBet*1.25)
+		base = maxBet*1.25;
 	for(let i=0;i<limit-1;i++){
 		base = (base*multiplier)/(multiplier+1);
 	}
