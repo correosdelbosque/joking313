@@ -5,7 +5,7 @@ You do have permission to redistribute my scripts but please do not claim them a
 # Script User Interface
 ![screenshot 95](https://user-images.githubusercontent.com/35207683/35952872-1853d4ec-0c50-11e8-852c-499be9ea48eb.png)
 
-This Script for RaiGames and Ethcrash feature a user interface that displays certain statistics, this interface will be under constant improvement so be sure to check for new features.  
+This Script for RaiGames and Ethcrash feature a user interface that displays certain statistics, this interface will be under constant improvement so be sure to check for new features.  It can be moved around the screen by clicking and dragging the top header where it says Script Stats. A couple undates that I am working on for the UI is a minimize button, several more statistics to display, and the ability to change script variables at runtime.
 
 # How the script works
 Whereas alot of scripts have a base bet that you set, mine do not have that you enter the total amount of bits you want the script to use instead and then the script will automatically compute what the base bet should be.
