@@ -9,7 +9,7 @@ var risingBetPercentage = .50;//percent of winnings to reinvest into betting for
 //if you dont want to reinvest any set it to 0 if you want to reinvest all set it to 1
 
 //You can change these variables but it is recommended to leave them as is:
-var baseCashout = 1.06;//this is the cashout that will be returned to on a win, the cashout will be variable after a loss (suggested range is 1.04x - 1.08x)
+var baseCashout = 1.08;//this is the cashout that will be returned to on a win, the cashout will be variable after a loss (suggested range is 1.04x - 1.08x)
 var maxBet = 1000000;//RaiGames allows bets no larger than 100000 as of 1/10/18 and they have not updated API this value should be 1,000,000 on bustabit and ethcrash
 
 //Do not change these variables:
@@ -17,8 +17,6 @@ var initialWagered = wageredBits;// has to be kept track of so that when increas
 var currentBet;//used in determining what the current bet amount is
 var currentCashout = baseCashout;//used in determining what the current cashout is
 //var stopScriptOnLoss = true;//will stop the script in the event of "maxLosses" losses in a row
-var playing = false;//will delay initial start by one game so that if script is ran between 'game_started' and 'game_crash' phase 
-//it will not prematurly increase bet if busts below "currentCashout"
 var lossStreak = 0;//number of losses in a row
 var userBalance = userInfo.balance/100;//the users balance
 var totalWon = 0;//total profit from the script thus far
@@ -51,19 +49,12 @@ function calcBase(wagered,limit){
 currentBet = calcBase(wageredBits,maxLosses);
 
 engine.on('GAME_STARTING', function() {
-	if(playing){
-		log("Current balance: " + userInfo.balance + " will bet " + currentBet + " at " + currentCashout);
-		engine.bet(currentBet*100, currentCashout);
-	}
+	log("Current balance: " + userInfo.balance + " will bet " + currentBet + " at " + currentCashout);
+	engine.bet(currentBet*100, currentCashout);
 });
 
 engine.on('GAME_ENDED', function() {
-	if(!playing){
-		playing = true;
-		log("Game start!");
-		return;
-	}
-	if(engine.history.first().bust<currentCashout){
+	if(engine.history.first().bust<currentCashout && engine.history.first().wager!=0){
 		currentCashout = 1.25;
 		if(lossStreak==0)
 			currentBet *= 4;
@@ -72,6 +63,10 @@ engine.on('GAME_ENDED', function() {
 		lossStreak++;
 		log("LOST: new bet is " + currentBet + " new cashout is " + currentCashout);
 		prevLoss = true;
+	}
+	else if(engine.history.first().wager==0){
+		log("Either first game or bet packet lost");
+		return;
 	}
 	else{
 		currentBet = calcBase(Math.floor(wageredBits),maxLosses);
