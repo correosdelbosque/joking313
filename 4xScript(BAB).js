@@ -17,8 +17,6 @@ var currentBet;//used in determining what the current bet amount is
 var currentCashout = baseCashout;//used in determining what the current cashout is
 //var stopScriptOnLoss = true;//will stop the script in the event of "maxLosses" losses in a row
 var cumulativeLoss = 0;// the cumulative loss of the current loss streak
-var playing = false;//will delay initial start by one game so that if script is ran between 'game_started' and 'game_crash' phase 
-//it will not prematurly increase bet if busts below "currentCashout"
 var lossStreak = 0;//number of losses in a row
 var userBalance = userInfo.balance/100;//the users balancce
 var totalWon = 0;//total profit from the script thus far
@@ -54,25 +52,22 @@ function calcBase(bits,num){
 currentBet = calcBase(wageredBits,maxLosses);
 
 engine.on('GAME_STARTING', function() {
-	if(playing){
-		log("Current balance: " + userInfo.balance + " will bet " + currentBet + " at " + currentCashout);
-		engine.bet(currentBet*100, currentCashout);
-	}
+	log("Current balance: " + userInfo.balance + " will bet " + currentBet + " at " + currentCashout);
+	engine.bet(currentBet*100, currentCashout);
 });
 
 engine.on('GAME_ENDED', function() {
-	if(!playing){
-		playing = true;
-		log("Game start!");
-		return;
-	}
-	if(engine.history.first().bust<currentCashout){
+	if(engine.history.first().bust<currentCashout && engine.history.first().wager!=0){
 		cumulativeLoss+=currentBet;
 		currentBet*=4;
 		currentCashout = parseFloat(((cumulativeLoss/currentBet)+1).toFixed(2));
 		lossStreak++;
 		log("LOST: new bet is " + currentBet + " new cashout is " + currentCashout);
 		prevLoss = true;
+	}
+	else if(engine.history.first().wager==0){
+		log("Either first game or bet packet lost");
+		return;
 	}
 	else{
 		currentBet = calcBase(Math.floor(wageredBits),maxLosses);
