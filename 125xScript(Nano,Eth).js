@@ -17,8 +17,6 @@ var initialWagered = wageredBits;// has to be kept track of so that when increas
 var currentBet;//used in determining what the current bet amount is
 var currentCashout = baseCashout;//used in determining what the current cashout is
 //var stopScriptOnLoss = true;//will stop the script in the event of "maxLosses" losses in a row
-var playing = false;//will delay initial start by one game so that if script is ran between 'game_started' and 'game_crash' phase 
-//it will not prematurly increase bet if busts below "currentCashout"
 var lossStreak = 0;//number of losses in a row
 var userBalance = engine.getBalance()/100;//the users balance
 var divTable = [];//holds elements to pass to the UI to update table results
@@ -110,19 +108,14 @@ function createDivTable(){
 createDivTable();
 
 engine.on('game_starting', function(info) {
-	if(playing){
-		console.log("Current balance: " + engine.getBalance() + " will bet " + currentBet + " at " + currentCashout);
-		engine.placeBet(currentBet*100, currentCashout*100);
-	}
+	console.log("Current balance: " + engine.getBalance() + " will bet " + currentBet + " at " + currentCashout);
+	engine.placeBet(currentBet*100, currentCashout*100);
 });
 
 engine.on('game_crash', function(data) {
-	if(!playing){
-		playing = true;
-		console.log("Game start!");
+	if(engine.lastGamePlay()=='NOT_PLAYED')
 		return;
-	}
-	if((data.game_crash/100)<currentCashout){
+	if(engine.lastGamePlay()=='LOST'){
 		currentCashout = 1.25;
 		if(lossStreak==0)
 			currentBet *= 4;
@@ -243,17 +236,6 @@ function createTable(matrix){
 	header.innerHTML = "Script Stats";
 	header.style.borderRadius = "10px 10px 0px 0px";
 	header.style.cursor = "move";
-	let close = document.createElement("p");
-	close.innerHTML = "&#9746;";
-	close.style.display = "inline";
-	close.style.position = "absolute";
-	close.style.right = "10px";
-	close.style.cursor = "pointer";
-	header.appendChild(close);
-	close.addEventListener("click", function(){
-		document.body.removeChild(div);
-		engine.stop();
-	});
 	div.appendChild(header);
 	
 	let table = document.createElement("TABLE");
@@ -363,6 +345,11 @@ function createTable(matrix){
 	
 	document.body.appendChild(div);
 	
+	document.getElementsByClassName("strategy-stop")[0].addEventListener("click",function inner(){
+		document.body.removeChild(div);
+		document.getElementsByClassName("strategy-stop")[0].removeEventListener("click",inner);
+	});
+	
 	dragElement(div,header);
 }
 createTable(divTable);
@@ -432,10 +419,15 @@ function createDonateBox(){
 	para.style.padding = "5px";
 	para.style.maxWidth = "350px";
 	para.style.borderRadius = "0px 0px 10px 10px";
-	para.innerHTML = "All my scripts are availible free to use, however it you would like to show your support for my scripts feel free to send me tips to the account Joking313 on BustaBit, Raigames, and Ethcrash"
+	para.innerHTML = "All my scripts are availible free to use, however it you would like to show your support for my scripts feel free to send me tips to the account Joking313 on BustaBit, Raigames, and Ethcrash. I appreciate it :)";
 	div.appendChild(para);
 	
 	dragElement(div,header);
+	
+	document.getElementsByClassName("strategy-stop")[0].addEventListener("click",function inner(){
+		document.body.removeChild(div);
+		document.getElementsByClassName("strategy-stop")[0].removeEventListener("click",inner);
+	});
 	
 	document.body.appendChild(div);
 }
@@ -480,6 +472,11 @@ function createContactBox(){
 	div.appendChild(para);
 	
 	dragElement(div,header);
+	
+	document.getElementsByClassName("strategy-stop")[0].addEventListener("click",function inner(){
+		document.body.removeChild(div);
+		document.getElementsByClassName("strategy-stop")[0].removeEventListener("click",inner);
+	});
 	
 	document.body.appendChild(div);
 }
@@ -576,5 +573,11 @@ function createHelpBox(){
 	div.appendChild(last);
 	
 	dragElement(div,header);
+	
+	document.getElementsByClassName("strategy-stop")[0].addEventListener("click",function inner(){
+		document.body.removeChild(div);
+		document.getElementsByClassName("strategy-stop")[0].removeEventListener("click",inner);
+	});
+	
 	document.body.appendChild(div);
 }
