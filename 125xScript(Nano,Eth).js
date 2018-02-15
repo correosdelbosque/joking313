@@ -109,7 +109,7 @@ createDivTable();
 
 engine.on('game_starting', function(info) {
 	console.log("Current balance: " + engine.getBalance() + " will bet " + currentBet + " at " + currentCashout);
-	engine.placeBet(currentBet*100, currentCashout*100);
+	engine.placeBet(currentBet*100, Math.round(currentCashout*100));
 });
 
 engine.on('game_crash', function(data) {
