@@ -236,6 +236,17 @@ function createTable(matrix){
 	header.innerHTML = "Script Stats";
 	header.style.borderRadius = "10px 10px 0px 0px";
 	header.style.cursor = "move";
+	let close = document.createElement("p");
+	close.innerHTML = "&#9746;";
+	close.style.display = "inline";
+	close.style.position = "absolute";
+	close.style.right = "10px";
+	close.style.cursor = "pointer";
+	header.appendChild(close);
+	close.addEventListener("click", function(){
+		document.body.removeChild(div);
+		engine.stop();
+	});
 	div.appendChild(header);
 	
 	let table = document.createElement("TABLE");
