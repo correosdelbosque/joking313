@@ -15,6 +15,11 @@ The way the 4x Script functions is that on a loss it will multiply the base bet 
 
 # 1.25x Script
 This script is very similar to the 4x script however it will multiply the bet by 4x on the first loss and then by 5x on every subsiqent loss. It will also stay at 1.25x for every loss.
+
+# Gambler Fallacy Script
+![screenshot 109](https://user-images.githubusercontent.com/35207683/36823696-5ff29266-1ccc-11e8-87e7-7e0441eeef4b.png)
+
+This script is designed to generate previous game crashes and then will look through them to find the number of busts at a given multiplier that are statistically due to not appear again for a while and bet on that multiplier, then it will check after every game for a better multiplier.  If all patterns are statistically due to appear again soon the script will not bet at all until a pattern appears.
   
 # Script set up
 ## Raigames and Ethcrash
