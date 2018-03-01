@@ -128,7 +128,7 @@ for(let i=100+searchIncrement,count = 0;i<=maxSearch;i+=searchIncrement,count++)
 }
 
 /**
-* function that makes sure taht the user has enough in wageredBits for at least one strategy 
+* function that makes sure that the user has enough in wageredBits for at least one strategy 
 *
 *@param int wagered, the amount of bits that the user is letting the script bet with
 **/
@@ -599,12 +599,10 @@ var betTableData = [];
 function updateBetTable(matrix){
 	if(matrix[0].length==1){
 		betTableData[0][0].innerHTML = matrix[0][0];
-		for(let i=1;i<15;i++){
+		for(let i=1;i<15;i++)
 			tableOfRows[i].style.display = "none";
-			for(let k = 1;k<4;k++){
-				betTableData[i][k].style.display = "none";
-			}
-		}
+		for(let k = 1;k<4;k++)
+			betTableData[0][k].style.display = "none";
 	}
 	else{
 		for(let i=0;i<15;i++){
@@ -634,7 +632,7 @@ function updateBetTable(matrix){
 
 var oddsTableData = [];
 /**
-* this function updates the odds table, updating the appearence of previous crash patterns and allowing certain strategies if user has equired enough bits
+* this function updates the odds table, updating the appearence of previous crash patterns and allowing certain strategies if user has aquired enough bits
 *
 *@param array matrix, matrix of odds table data
 **/
