@@ -28,7 +28,7 @@ var safteyMargin = .15; //This number represented as a percent is used to determ
 //ie betting on 1.05 being able to withstand 3 losses in a row the odds of that happening are 1 in 5259 so for a 10% saftey margin it will bet up to a max of 525 games
 //after this triple loss before switching to a different pattern or stopping until a new bust pattern appears
 var wageredBits = 5000;//the total amount of bits you will wager, if there is a long loss streak this is the total amount you would lose
-var maxBet = 100000;//this is the max bet size for the server you are on, for Raigames it is 100,000 for BustaBit and Ethcrash it is 1,000,000
+var maxBet = 100000;//this is the max bet size for the server you are on, for Raigames it is 100,000 for BustaBit and Ethcrash it is 500,000
 //This should be determined by engine.getMaxBet()/100 but MrBit on Raigames never updated his API code :(
 
 //change these only if you know what your doing, setting them incorrectly could break the script in unexpected ways, as there is no error checking on them
@@ -247,7 +247,7 @@ function calculateBaseBet(wagered,multiplier,limit){
 	}
 	return base;
 }
-console.log(calculateBaseBet(2500,162,8));
+//console.log(calculateBaseBet(2500,162,8));
 
 /**
 *This function though not nessesary in previous scripts is needed because sometimes values come out to decimals, and due to me having to call Math.ceil on bets after losses 
