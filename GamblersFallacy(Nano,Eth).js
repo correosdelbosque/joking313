@@ -2,12 +2,10 @@
 *Gambler Fallacy Script BETA verion 1.0.0
 *This script will only work on Raigames and Ethcrash
 *
-*WARNING THIS SCRIPT IS IN BETA AND IS ONLY POSTED HERE FOR PEOPLE WHO WANT TO HELP TEST IT, DO NOT BET LARGE AMOUNTS WITH THIS SCRIPT
-*WARNING THIS SCRIPT IS IN BETA AND IS ONLY POSTED HERE FOR PEOPLE WHO WANT TO HELP TEST IT, DO NOT BET LARGE AMOUNTS WITH THIS SCRIPT
-*WARNING THIS SCRIPT IS IN BETA AND IS ONLY POSTED HERE FOR PEOPLE WHO WANT TO HELP TEST IT, DO NOT BET LARGE AMOUNTS WITH THIS SCRIPT
-*WARNING THIS SCRIPT IS IN BETA AND IS ONLY POSTED HERE FOR PEOPLE WHO WANT TO HELP TEST IT, DO NOT BET LARGE AMOUNTS WITH THIS SCRIPT
-*WARNING THIS SCRIPT IS IN BETA AND IS ONLY POSTED HERE FOR PEOPLE WHO WANT TO HELP TEST IT, DO NOT BET LARGE AMOUNTS WITH THIS SCRIPT
-*WARNING THIS SCRIPT IS IN BETA AND IS ONLY POSTED HERE FOR PEOPLE WHO WANT TO HELP TEST IT, DO NOT BET LARGE AMOUNTS WITH THIS SCRIPT
+**Features of this script:
+*-GUI for clarity in understanding when and what the script will bet
+*-remote termination function, so if you start the script on one computer and want to disable it from a different computer you can do that by
+*	typing !kill, (note must be in the same chat channel).
 *
 *If the script does not run the first time just click the run button again, it just means the external scripts did not completely load in time
 **/
