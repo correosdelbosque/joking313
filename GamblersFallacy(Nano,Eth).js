@@ -9,9 +9,6 @@
 *WARNING THIS SCRIPT IS IN BETA AND IS ONLY POSTED HERE FOR PEOPLE WHO WANT TO HELP TEST IT, DO NOT BET LARGE AMOUNTS WITH THIS SCRIPT
 *WARNING THIS SCRIPT IS IN BETA AND IS ONLY POSTED HERE FOR PEOPLE WHO WANT TO HELP TEST IT, DO NOT BET LARGE AMOUNTS WITH THIS SCRIPT
 *
-*With that being said I have already put it through alot of testing for the obvious bugs and you can see me running this script with 50,000 ethos
-*https://www.ethcrash.io/user/Joking313
-*
 *If the script does not run the first time just click the run button again, it just means the external scripts did not completely load in time
 *
 **/
