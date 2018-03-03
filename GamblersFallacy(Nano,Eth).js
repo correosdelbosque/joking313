@@ -1,5 +1,5 @@
 /**
-*Gambler Fallacy Script BETA verion 1.0.0
+*Gambler Fallacy Script verion 1.0.0
 *This script will only work on Raigames and Ethcrash
 *
 **Features of this script:
@@ -161,6 +161,8 @@ function winProb(cashOut) {
 
 /**
 * this function throws errors in the script, usually followed by an engine.stop() call
+*
+*@param string message, the message to be include in the error box
 **/
 function throwError(message){
 	var error = document.createElement("div");
