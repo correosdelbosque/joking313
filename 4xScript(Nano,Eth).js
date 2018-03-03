@@ -1,5 +1,12 @@
-//For RaiGames, and Ethcrash
-//4x Script
+/**
+*For RaiGames, and Ethcrash
+*4x Script
+*
+*Features of this script:
+*-GUI for clarity in understanding when and what the script will bet
+*-remote termination function, so if you start the script on one computer and want to disable it from a different computer you can do that by
+*	typing !kill, (note must be in the same chat channel).
+**/
 
 //You can change these variables:
 var wageredBits = 5000;//the total amount of bits to allow this script to bet with
@@ -151,6 +158,13 @@ engine.on('game_crash', function(data) {
 	}
 	if(lossStreak==maxLosses){
 		throwError("Max Losses reached")
+		engine.stop();
+	}
+});
+
+engine.on('msg', function(data) {
+    if(data.username==engine.getUsername() && data.message=="!kill"){
+		engine.chat("Script remotely terminated.");
 		engine.stop();
 	}
 });
