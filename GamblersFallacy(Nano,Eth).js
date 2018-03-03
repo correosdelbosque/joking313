@@ -47,6 +47,7 @@ var totalWon = 0;//total profit from the script thus far
 var initialWagered = wageredBits;// has to be kept track of so that when increasing wageredBits it will increase it correctly
 var userBalance = engine.getBalance()/100;//your balance, is used to verify you have set wageredBits to a number smaller than your balance
 var theSeed;//the seed each site uses to determine crash points
+var previousHash;//used to make sure all games are consecutive and none have been skipped
 
 /**
 * a funcion to make sure that all user parameters make sense
@@ -398,7 +399,8 @@ function calcBreak(mult,limit){
 }
 
 var theEngine = engine.getEngine();
-genTable(theEngine.tableHistory[0].hash);
+previousHash = theEngine.tableHistory[0].hash;
+genTable(previousHash);
 
 var pattern = calculatePatterns();
 var cashoutAndLimit = findLowestOdds(pattern);
@@ -449,6 +451,9 @@ engine.on('game_starting', function(info) {
 engine.on('game_crash', function(data) {
     table.unshift(data.game_crash/100);
     table.pop();
+	if(genGameHash(data.hash)!=previousHash)
+		genTable(data.hash);
+	previousHash = data.hash;
 	pattern = calculatePatterns();
 	createOddsTable(pattern);
 	updateOddsTable(OddsTable);
