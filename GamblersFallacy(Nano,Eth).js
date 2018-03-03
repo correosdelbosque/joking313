@@ -524,6 +524,18 @@ engine.on('game_crash', function(data) {
 	}
 });
 
+/**
+* this function allows remote termination of the script by only the user running it, this allows the user to terminate the script on a different computer
+*	if for any reason they want to stop the script but are not at the computer running it.
+*
+**/
+engine.on('msg', function(data) {
+    if(data.username==engine.getUsername() && data.message=="!kill"){
+		engine.chat("Script remotely terminated.");
+		engine.stop();
+	}
+});
+
 var OddsTable = [];
 var betTable = [];
 
