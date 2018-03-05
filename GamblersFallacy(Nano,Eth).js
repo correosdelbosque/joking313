@@ -10,7 +10,7 @@
 *If the script does not run the first time just click the run button again, it just means the external scripts did not completely load in time
 **/
 //You can change these:
-var realmOfSaftey = 3;//set this as either 1,2,3 or 4.  This is the odds you will play with, 
+var realmOfSafety = 3;//set this as either 1,2,3 or 4.  This is the odds you will play with, 
   //1 means you will bet on consecutive games of at least 2 that have odds between 1 in 200 and 1 in 1000
   //2 means you will bet on consecutive games of at least 2 that have odds between 1 in 1000 and 1 in 5000
   //3 means you will bet on consecutive games of at least 3 that have odds between 1 in 5000 and 1 in 10000
@@ -18,8 +18,8 @@ var realmOfSaftey = 3;//set this as either 1,2,3 or 4.  This is the odds you wil
 var risingBetPercentage = .5;//percent of winnings to reinvest into betting for example if your risingBetPercentage is at .50 and 
 //basebet comes out to 100 bits on 1.08 a win would give you 8 bits on win therefore 4 would be reinvested into raising your bets the other 4 would be safe and not used to bet
 //if you dont want to reinvest any set it to 0 if you want to reinvest all set it to 1
-var safteyMargin = .15; //This number represented as a percent is used to determine up to what percent of total odds the game will bet to
-//ie betting on 1.05 being able to withstand 3 losses in a row the odds of that happening are 1 in 5259 so for a 10% saftey margin it will bet up to a max of 525 games
+var safetyMargin = .15; //This number represented as a percent is used to determine up to what percent of total odds the game will bet to
+//ie betting on 1.05 being able to withstand 3 losses in a row the odds of that happening are 1 in 5259 so for a 10% safety margin it will bet up to a max of 525 games
 //after this triple loss before switching to a different pattern or stopping until a new bust pattern appears
 var wageredBits = 5000;//the total amount of bits you will wager, if there is a long loss streak this is the total amount you would lose
 var maxBet = 100000;//this is the max bet size for the server you are on, for Raigames it is 100,000 for BustaBit and Ethcrash it is 500,000
@@ -34,7 +34,7 @@ var table = []; //array of previous crashes
 var currentCashOut = -1; //the multiplyer you will cash out at
 var currentBet;//your current bet
 var tableLength; //the length of the table, a longer length yeilds more reliable results but a longer initial load time, note this initial load lag happens only once
-var tableOfValues = []; //holds the table of min and max times a bust can happen in a row between the odds of 1 and crashes[realmOfSaftey-1] and 1 and crashes[realmOfSaftey-1]
+var tableOfValues = []; //holds the table of min and max times a bust can happen in a row between the odds of 1 and crashes[realmOfSafety-1] and 1 and crashes[realmOfSafety-1]
 var tableOfOdds = [];
 var crashes = [200,1000,5000,10000,25000];//the odds used to calculate max times a bust can happen in a row
 var currentLimit; //used to determine how many loses can happen in a row at a given multiplier
@@ -51,15 +51,15 @@ var previousHash;//used to make sure all games are consecutive and none have bee
 * a funcion to make sure that all user parameters make sense
 **/
 function idiotTest(){
-	if(realmOfSaftey>4||realmOfSaftey<1){
-		throwError("realmOfSaftey variable must be between 1 and 4 inclusive.");
+	if(realmOfSafety>4||realmOfSafety<1){
+		throwError("realmOfSafety variable must be between 1 and 4 inclusive.");
 		engine.stop();
 	}
 	if(userBalance<wageredBits){
 		throwError("wageredBits is higher than your balance");
 		engine.stop();
 	}
-	if(safteyMargin<.01 || safteyMargin>1){
+	if(safetyMargin<.01 || safetyMargin>1){
 		throwError("use a number between .01 and 1 for max losses inclusive");
 		engine.stop();
 	}
@@ -85,7 +85,7 @@ function getSite(){
 }
 getSite();
 
-tableLength = crashes[realmOfSaftey];
+tableLength = crashes[realmOfSafety];
 for(let i=100+searchIncrement,count = 0;i<=maxSearch;i+=searchIncrement,count++){
 	let keeper = 1;
 	tableOfValues[count] = [];
@@ -98,25 +98,25 @@ for(let i=100+searchIncrement,count = 0;i<=maxSearch;i+=searchIncrement,count++)
 		let current = Math.round(1/Math.pow(loseProb,keeper));
 		let next = Math.round(1/Math.pow(loseProb,keeper+1));
 		let prev = Math.round(1/Math.pow(loseProb,keeper-1));
-		if(current<crashes[realmOfSaftey-1] && next>crashes[realmOfSaftey]){//some multipliers such as 1.20x have odds below 1 in 200 and above 1 in 1000 but not in between
+		if(current<crashes[realmOfSafety-1] && next>crashes[realmOfSafety]){//some multipliers such as 1.20x have odds below 1 in 200 and above 1 in 1000 but not in between
 			tableOfValues[count][1] = 0;
 			tableOfOdds[count][1] = 0;
 			inBounds = false;
 		}
-		else if(prev<crashes[realmOfSaftey-1] && current>crashes[realmOfSaftey-1]){
+		else if(prev<crashes[realmOfSafety-1] && current>crashes[realmOfSafety-1]){
 			tableOfValues[count][1] = keeper;
 			tableOfOdds[count][1] = current;
 		}
-		else if(current>crashes[realmOfSaftey-1] && next<crashes[realmOfSaftey]){
+		else if(current>crashes[realmOfSafety-1] && next<crashes[realmOfSafety]){
 			tableOfValues[count][tableOfValues[count].length] = keeper;
 			tableOfOdds[count][tableOfOdds[count].length] = current;
 		}
-		else if(current<crashes[realmOfSaftey] && next>crashes[realmOfSaftey]){
+		else if(current<crashes[realmOfSafety] && next>crashes[realmOfSafety]){
 			tableOfValues[count][tableOfValues[count].length] = keeper;
 			tableOfOdds[count][tableOfOdds[count].length] = current;
 			inBounds = false;
 		}
-		if(current>crashes[realmOfSaftey])
+		if(current>crashes[realmOfSafety])
 			inBounds=false;
 		keeper++;
 	}
@@ -423,7 +423,7 @@ else{
 *@param array pattern, the array of previous crashes at certain multipliers
 **/
 function findLowestOdds(pattern){
-	var lowestMult = safteyMargin;//will hold the multiplier with the lowest odds of crashing again soon
+	var lowestMult = safetyMargin;//will hold the multiplier with the lowest odds of crashing again soon
 	var theMult = [-1,0];
 	for(let i=0;i<pattern.length;i++)
 		for(let k=1;k<pattern[i].length;k++)
@@ -1117,7 +1117,7 @@ function createHelpBox(){
 	let para1 = document.createElement("p");
 	para1.style.backgroundColor = "grey";
 	para1.style.padding = "5px";
-	para1.innerHTML = "Those values are blacked out because they do not have odds between whatever you set realmOfSaftey at and thus the script will never bet at those multipliers.";
+	para1.innerHTML = "Those values are blacked out because they do not have odds between whatever you set realmOfSafety at and thus the script will never bet at those multipliers.";
 	div.appendChild(para1);
 	
 	let question2 = document.createElement("h1");
